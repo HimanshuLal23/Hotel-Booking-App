@@ -4,13 +4,14 @@ import Model.Hotel;
 import Model.Room;
 import Model.RoomType;
 
-import com.example.hotelbookingservice.Exception.RoomUnavailableException;
+import com.example.hotelbookingservice.Exception.ExceptionType;
+import com.example.hotelbookingservice.Exception.HotelBookingException;
 import com.example.hotelbookingservice.Label.Message;
 
 import java.util.Map;
 
 public class RoomSelectService {
-    public static Room selectHotelRoom(Hotel hotel,RoomType roomType) throws RoomUnavailableException {
+    public static Room selectHotelRoom(Hotel hotel,RoomType roomType) throws HotelBookingException {
         Map<Room,Integer> roomsStatus = hotel.getRooms();
         for(var roomCount:roomsStatus.entrySet()) {
             Room room = roomCount.getKey();
@@ -19,6 +20,6 @@ public class RoomSelectService {
                 return room;
             }
         }
-        throw new RoomUnavailableException(Message.hotelRoomUnavailable);
+        throw new HotelBookingException(ExceptionType.RoomUnavailableException,Message.hotelRoomUnavailable);
     }
 }

@@ -6,10 +6,7 @@ import Model.Room;
 import Model.RoomType;
 import Model.PaymentType;
 import Model.User;
-import com.example.hotelbookingservice.Exception.BookingFailureException;
-import com.example.hotelbookingservice.Exception.CityNotFoundException;
-import com.example.hotelbookingservice.Exception.HotelNotFoundException;
-import com.example.hotelbookingservice.Exception.RoomUnavailableException;
+import com.example.hotelbookingservice.Exception.*;
 import com.example.hotelbookingservice.Label.Message;
 import com.example.hotelbookingservice.service.BookingService;
 import com.example.hotelbookingservice.service.RoomSelectService;
@@ -52,14 +49,8 @@ public class HotelBookingServiceApplication {
             BookingService bookingService = context.getBean(BookingService.class);
             bookingService.bookRoom(user,searchedHotel,currentRoom, PaymentType.UPI);
             logger.info(Message.hotelBookedSuccessfully);
-        }catch (HotelNotFoundException hotelNotFoundException) {
-            logger.error(hotelNotFoundException.getMessage());
-        }catch (CityNotFoundException cityNotFoundException) {
-            logger.error(cityNotFoundException.getMessage());
-        }catch (RoomUnavailableException roomUnavailableException) {
-            logger.error(roomUnavailableException.getMessage());
-        }catch (BookingFailureException bookingFailureException) {
-            logger.error(bookingFailureException.getMessage());
+        }catch (HotelBookingException hotelBookingException) {
+            logger.error(hotelBookingException.getMessage());
         }
     }
 

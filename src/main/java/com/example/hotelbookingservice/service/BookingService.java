@@ -8,10 +8,10 @@ import Model.Bill;
 import Model.PaymentType;
 import Model.Payment;
 
-import com.example.hotelbookingservice.Exception.BookingFailureException;
+import com.example.hotelbookingservice.Exception.ExceptionType;
+import com.example.hotelbookingservice.Exception.HotelBookingException;
 import com.example.hotelbookingservice.Label.Message;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -21,7 +21,7 @@ public class BookingService {
     @Autowired
     private BillingService billingService;
     private Bill bill;
-    public Booking bookRoom(User user, Hotel hotel, Room room, PaymentType paymentType) throws BookingFailureException {
+    public Booking bookRoom(User user, Hotel hotel, Room room, PaymentType paymentType) throws HotelBookingException {
         Booking booking = new Booking(user.getUserId(),hotel.getHotelId(),room.getRoomId());
         Payment payment = paymentService.makePayment(user,paymentType,hotel,room,booking);
         if(payment.isSuccess()) {
@@ -30,6 +30,6 @@ public class BookingService {
             user.addBooking(booking);
             return booking;
         }
-        throw new BookingFailureException(Message.bookingFailure);
+        throw new HotelBookingException(ExceptionType.BookingFailureException,Message.bookingFailure);
     }
 }
