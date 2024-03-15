@@ -47,7 +47,7 @@ public class HotelBookingServiceApplication {
         hotelRepository.addHotel(hotel);
         Logger logger = LoggerFactory.getLogger(HotelBookingServiceApplication.class);
         try {
-            Hotel searchedHotel = hotelSearchService.searchHotel("Delhi","Taj");
+            Hotel searchedHotel = hotelSearchService.searchHotel("Mumbai","Taj");
             Room currentRoom = RoomSelectService.selectHotelRoom(searchedHotel,RoomType.DELUXE);
             BookingService bookingService = context.getBean(BookingService.class);
             bookingService.bookRoom(user,searchedHotel,currentRoom, PaymentType.UPI);
